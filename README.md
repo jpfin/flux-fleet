@@ -91,3 +91,45 @@ The clusters dir contains the Flux configuration:
 * ./clusters/<cluster>/apps.yaml points to apps configuration for cluster. eg.  ./clusters/staging/apps.yaml --> ./apps/staging
 * ./clusters/<cluster>/infrastructure.yaml points to infra configuration for cluster, eg.  ./clusters/staging/infrastructure.yaml --> ./infrastructure/staging
 * kustimisazation files are read first 
+
+
+# Application Notes
+
+Verify install with command
+```
+kubectl get pods --all-namespaces
+```
+## Vault 
+
+### UI
+
+To view UI, port foward with ```kubectl port-forward vault-0 8200:8200 ``` Can maybe apply this as part of value/config. Need to look into this more
+
+Vault will start as not ready, as it will be 'sealed'. Need to unseal following https://www.vaultproject.io/docs/platform/k8s/helm/run (snippet below). In future plan to provide a rest service/mechanism to automate this.
+
+```
+vault-0                                 0/1     Running   0          1m49s
+```
+
+```
+kubectl exec -ti --namespace=vault vault-0 -- vault operator init
+Unseal Key 1: MBFSDepD9E6whREc6Dj+k3pMaKJ6cCnCUWcySJQymObb
+Unseal Key 2: zQj4v22k9ixegS+94HJwmIaWLBL3nZHe1i+b/wHz25fr
+Unseal Key 3: 7dbPPeeGGW3SmeBFFo04peCKkXFuuyKc8b2DuntA4VU5
+Unseal Key 4: tLt+ME7Z7hYUATfWnuQdfCEgnKA2L173dptAwfmenCdf
+Unseal Key 5: vYt9bxLr0+OzJ8m7c7cNMFj7nvdLljj0xWRbpLezFAI9
+
+Initial Root Token: s.zJNwZlRrqISjyBHFMiEca6GF
+##...
+
+## Unseal the first vault server until it reaches the key threshold, 3 of the 5 generated keys
+$ kubectl exec -ti --namespace=vault vault-0 -- vault operator unseal MBFSDepD9E6whREc6Dj+k3pMaKJ6cCnCUWcySJQymOb
+$ kubectl exec -ti --namespace=vault vault-0 -- vault operator unseal zQj4v22k9ixegS+94HJwmIaWLBL3nZHe1i+b/wHz25fr
+$ kubectl exec -ti --namespace=vault vault-0 -- vault operator unseal 7dbPPeeGGW3SmeBFFo04peCKkXFuuyKc8b2DuntA4VU5
+
+## Verify now ready
+kubectl get pods --all-namespaces
+or
+kubectl get pods --namespace=vault
+
+```
