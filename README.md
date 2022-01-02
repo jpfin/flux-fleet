@@ -105,6 +105,9 @@ kubectl get pods --all-namespaces
 
 To view UI, port foward with ```kubectl port-forward vault-0 8200:8200 ``` Can maybe apply this as part of value/config. Need to look into this more
 
+
+### Sealed vault
+
 Vault will start as not ready, as it will be 'sealed'. Need to unseal following https://www.vaultproject.io/docs/platform/k8s/helm/run (snippet below). In future plan to provide a rest service/mechanism to automate this.
 
 ```
