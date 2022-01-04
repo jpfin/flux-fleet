@@ -27,6 +27,7 @@ kubectl config view
 
 # Change the current context to 'kind-staging'. Useful if need to switch between clusters
 kubectl config use-context kind-staging
+kubectl config use-context kind-staging-vault
 
 ```
 
@@ -39,4 +40,7 @@ flux get all
 ```
 
 ## kind
-
+```
+# list clusters
+kind get clusters
+```
