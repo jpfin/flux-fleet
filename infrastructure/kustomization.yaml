@@ -4,4 +4,3 @@ resources:
   - nginx
   - sealed-secrets
   - sources
-  - vault
