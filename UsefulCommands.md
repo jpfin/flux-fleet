@@ -12,6 +12,7 @@ kubectl get namespace
 kubectl get pods --namespace=vault
 
 # exec into pod in certain namespace
+kubectl exec -ti --namespace=consul server-0 -- /bin/bash
 kubectl exec -ti --namespace=vault vault-0 -- vault operator init
 
 # override default context
@@ -43,4 +44,15 @@ flux get all
 ```
 # list clusters
 kind get clusters
+
+# delete cluster
+kind delete cluster --name staging
+```
+
+# Useful resources
+
+```
+# Helm chart repo
+https://artifacthub.io/
+
 ```
