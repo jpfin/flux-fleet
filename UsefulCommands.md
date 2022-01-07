@@ -30,6 +30,15 @@ kubectl config view
 kubectl config use-context kind-staging
 kubectl config use-context kind-staging-vault
 
+# get pod details
+kubectl get pods -n vault vault-0 -o yaml 
+
+kubectl describe pods -n vault vault
+
+# get cluster info
+kubectl cluster-info   
+
+
 ```
 
 
