@@ -33,7 +33,10 @@ kubectl config use-context kind-staging-vault
 # get pod details
 kubectl get pods -n vault vault-0 -o yaml 
 
-kubectl describe pods -n vault vault
+kubectl describe pods -n vault vault-0
+
+kubectl delete pods -n vault vault-0
+
 
 # get cluster info
 kubectl cluster-info   
@@ -56,6 +59,16 @@ kind get clusters
 
 # delete cluster
 kind delete cluster --name staging
+```
+
+## Kustomise
+```
+# To confirm that your patch config file changes are correct before applying to the cluster, you can run
+kustomize build development/vault
+
+# format file
+ kubectl kustomize cfg fmt file_name 
+
 ```
 
 # Useful resources
