@@ -3,6 +3,7 @@
 ## kubectl
 Resources
 * https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+* https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 ```
 # list namespaces
@@ -41,6 +42,11 @@ kubectl delete pods -n vault vault-0
 # get cluster info
 kubectl cluster-info   
 
+# dump pod logs (stdout)
+kubectl logs pods -n vault vault-0 
+
+# stream pod logs (stdout)
+kubectl logs -f pods -n vault vault-0
 
 ```
 
@@ -71,10 +77,49 @@ kustomize build development/vault
 
 ```
 
+## Helm
+
+
+```
+# get helm status
+helm status --namespace=vault vault
+
+```
+
+
 # Useful resources
 
 ```
 # Helm chart repo
 https://artifacthub.io/
+
+```
+
+
+## GIT Actions
+
+### Touble shooting
+
+# Getting  Permission denied error
+
+Issue:
+```
+/home/runner/work/_temp/1a79bda7-744a-43e2-829c-11542d4bc1e0.sh: line 1: ./scripts/validate.sh: Permission denied
+Error: Process completed with exit code 126.
+```
+Resolution:
+https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file
+```
+git update-index --add --chmod=+x build.sh
+git commit -m 'Make build.sh executable'
+git push
+```
+
+
+# Linux commands
+
+```
+# upgrade and clean
+sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get dist-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
 
 ```
